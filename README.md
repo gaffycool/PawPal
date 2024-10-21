@@ -1,17 +1,13 @@
 
 ## **PawPal** using Clean Android Architecture
-
+- PawPal allows the user to search for their favourite breed of dog using a public dog api. THe user is able to save thier favourite breed of dog into thier favourite list, and also able to search for different breed of dogs as well as compare different dog breed side by side
+- The app also has offline caching via a local db that allows the user to use the device offline to see their favourite Dogs.
 https://github.com/user-attachments/assets/872f3c80-4050-4289-a560-17a086d399b9
 
-Android App:
-- PawPal lists out the Top Dog breeds available, the user can add and remove their favourite breed of dog to their own watch list, as well as compare each dog breed side by side with images and filter through the list to search for particular breeds
-- The app also has offline caching via a local db that allows the user to use the device offline to see their favourite Dogs.
-
-
+**App Archetecture:**
 This repository contains an implementation of a clean architecture for Android applications using Compose, MVVM, Hilt, Coroutines, Kotlin Flow, Repository, Room, Retrofit, Mockk and JUnit.
 
 The project is divided into several modules, including:
-
 - `app`: The main application module, responsible for defining the UI using Compose and coordinating with the presentation layer.
 - `commonDomain`: The domain module, responsible for defining the business logic of the application and exposing it through interfaces.
   - `interactor`: The Interactors are responsible for call repository functions and do the buisness logics and return required models to viewmodel.
@@ -20,16 +16,14 @@ The project is divided into several modules, including:
   - `data-local`: The local data source module, responsible for implementing the logic to access data stored locally, using Room as the database.
   - `data-remote`: The remote data source module, responsible for implementing the logic to access data from a remote API, using Retrofit as the network client.
  
-Diagram of PawPal App Archetecture:
-
+**Diagram of PawPal App Archetecture:**
 ![pawpal app diagram](https://github.com/user-attachments/assets/f5182271-c5bc-4400-9a6f-d116adb2b590)
-
-
 
 The project follows a layered architecture approach, with each layer (presentation, domain, repository and data) having its own set of responsibilities and being completely decoupled from the other layers. The communication between the layers is done through well-defined interfaces, allowing for easy testing and future modifications.
 
-### Dependencies
+**Dependencies**
 Public API: https://dog.ceo/dog-api/
 
-Unit test coverage 100% for VM and repository
-
+**Unit testing:**
+- Unit testing with JUnit 100% coverage for all Viewmodels, Repositories and Interactors
+- Unit testing with Screenshot testing using Paparazzi https://betterprogramming.pub/sanely-test-your-android-ui-libraries-with-paparazzi-b6d46c55f6b0 
