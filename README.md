@@ -2,7 +2,12 @@
 ## **PawPal** using Clean Android Architecture
 - PawPal allows the user to search for their favourite breed of dog using a public dog api. THe user is able to save thier favourite breed of dog into thier favourite list, and also able to search for different breed of dogs as well as compare different dog breed side by side
 - The app also has offline caching via a local db that allows the user to use the device offline to see their favourite Dogs.
-https://github.com/user-attachments/assets/872f3c80-4050-4289-a560-17a086d399b9
+
+
+
+https://github.com/user-attachments/assets/2fafb303-1398-43e5-9ac2-8b7413a474d5
+
+
 
 **App Archetecture:**
 This repository contains an implementation of a clean architecture for Android applications using Compose, MVVM, Hilt, Coroutines, Kotlin Flow, Repository, Room, Retrofit, Mockk and JUnit.
