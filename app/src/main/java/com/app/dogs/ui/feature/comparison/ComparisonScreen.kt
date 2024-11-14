@@ -56,7 +56,7 @@ fun NavController.navigateToComparisonView(
     firstBreedData: BreedModel, secondBreedData: BreedModel
 ) {
     navigate(
-        Screen.Detail.routeName +
+        Screen.Comparison.routeName +
                 "/${Json.encodeToString(firstBreedData)}" +
                 "/${Json.encodeToString(secondBreedData)}"
     )
@@ -64,7 +64,7 @@ fun NavController.navigateToComparisonView(
 
 fun NavGraphBuilder.comparisonScreen(onBackClick: () -> Unit) {
     composable(
-        route = "${Screen.Detail.routeName}/{$FIRST_BREED_DATA}/{$SECOND_BREED_DATA}",
+        route = "${Screen.Comparison.routeName}/{$FIRST_BREED_DATA}/{$SECOND_BREED_DATA}",
         arguments = listOf(
             navArgument(FIRST_BREED_DATA) { type = NavType.StringType },
             navArgument(SECOND_BREED_DATA) { type = NavType.StringType },
