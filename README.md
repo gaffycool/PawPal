@@ -31,4 +31,8 @@ Public API: https://dog.ceo/dog-api/
 
 **Unit testing:**
 - Unit testing with JUnit 100% coverage for all Viewmodels, Repositories and Interactors
-- Unit testing with Screenshot testing using Paparazzi https://betterprogramming.pub/sanely-test-your-android-ui-libraries-with-paparazzi-b6d46c55f6b0 
+- Unit testing with Screenshot testing using Paparazzi https://betterprogramming.pub/sanely-test-your-android-ui-libraries-with-paparazzi-b6d46c55f6b0
+
+Proprietary License: This project is copyrighted and all rights are reserved. No use, redistribution, or modification is permitted without explicit permission.
+
+Copyright (c) 2024-2025 [@GaffyCool]. All rights reserved. This software is proprietary and cannot be used, modified, or redistributed without explicit permission from the author. No warranties are provided, and use of this software is entirely at your own risk.
