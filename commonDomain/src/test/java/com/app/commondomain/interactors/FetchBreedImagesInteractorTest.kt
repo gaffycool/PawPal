@@ -1,6 +1,8 @@
 package com.app.commondomain.interactors
 
 import com.app.commondomain.repository.DogsRepository
+import com.app.commontest.BaseTest
+import com.app.commontest.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -10,14 +12,14 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class FetchBreedImagesInteractorTest {
+class FetchBreedImagesInteractorTest : BaseTest<FetchBreedImagesInteractor>() {
 
+    override lateinit var classUnderTest: FetchBreedImagesInteractor
     private val dogsRepository: DogsRepository = mockk()
-    private lateinit var fetchBreedImagesInteractor: FetchBreedImagesInteractor
 
     @Before
-    fun setUp() {
-        fetchBreedImagesInteractor = FetchBreedImagesInteractor(dogsRepository)
+    override fun setUp() {
+        classUnderTest = FetchBreedImagesInteractor(dogsRepository)
     }
 
     /***
@@ -27,16 +29,20 @@ class FetchBreedImagesInteractorTest {
      */
     @Test
     fun testRemoveFromFavorite() = runTest {
-        val params = FetchBreedImagesInteractor.Params("b", "sub")
-        //given
-        coEvery {
-            dogsRepository.fetchDogBreedImages("b", "sub")
-        } returns listOf("image")
-
-        //when
-        fetchBreedImagesInteractor.get(params)
-
-        //then
-        coVerify { dogsRepository.fetchDogBreedImages("b", "sub") }
+        test(
+            given = {
+                coEvery {
+                    dogsRepository.fetchDogBreedImages("b", "sub")
+                } returns Result.success(listOf("image"))
+            },
+            whenAction = {
+                classUnderTest.invoke(
+                    FetchBreedImagesInteractor.Params("b", "sub")
+                )
+            },
+            then = {
+                coVerify { dogsRepository.fetchDogBreedImages("b", "sub") }
+            }
+        )
     }
 }

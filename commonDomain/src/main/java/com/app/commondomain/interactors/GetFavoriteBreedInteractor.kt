@@ -12,5 +12,5 @@ import javax.inject.Inject
 class GetFavoriteBreedInteractor @Inject constructor(
     private val muscleRepository: DogsRepository
 ) {
-    fun get(): Flow<List<BreedModel>> = muscleRepository.getFavoriteBreed()
+    operator fun invoke(): Flow<List<BreedModel>> = muscleRepository.getFavoriteBreed()
 }

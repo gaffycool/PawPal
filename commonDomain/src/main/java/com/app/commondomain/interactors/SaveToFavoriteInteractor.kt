@@ -1,7 +1,7 @@
 package com.app.commondomain.interactors
 
-import com.app.commondomain.repository.DogsRepository
 import com.app.commondomain.model.BreedModel
+import com.app.commondomain.repository.DogsRepository
 import javax.inject.Inject
 
 /**
@@ -11,5 +11,6 @@ import javax.inject.Inject
 class SaveToFavoriteInteractor @Inject constructor(
     private val muscleRepository: DogsRepository
 ) {
-    suspend fun save(watchlistModel: BreedModel) = muscleRepository.saveToFavorite(watchlistModel)
+    suspend operator fun invoke(watchlistModel: BreedModel) =
+        muscleRepository.saveToFavorite(watchlistModel)
 }

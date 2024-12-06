@@ -6,14 +6,14 @@ import javax.inject.Inject
 class FetchComparisonDataInteractor @Inject constructor(
     private val fetchBreedImagesInteractor: FetchBreedImagesInteractor
 ) {
-    suspend fun get(params: Params): ComparisonDataModel = ComparisonDataModel(
-        firstBreedImages = fetchBreedImagesInteractor.get(
+    suspend operator fun invoke(params: Params): ComparisonDataModel = ComparisonDataModel(
+        firstBreedImages = fetchBreedImagesInteractor.invoke(
             FetchBreedImagesInteractor.Params(
                 params.firstBreedData.breed,
                 params.firstBreedData.subBreed,
             )
         ),
-        secondBreedImages = fetchBreedImagesInteractor.get(
+        secondBreedImages = fetchBreedImagesInteractor.invoke(
             FetchBreedImagesInteractor.Params(
                 params.secondBreedData.breed,
                 params.secondBreedData.subBreed,

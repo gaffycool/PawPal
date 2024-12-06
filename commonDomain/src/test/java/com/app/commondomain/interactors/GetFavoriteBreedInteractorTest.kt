@@ -1,7 +1,8 @@
 package com.app.commondomain.interactors
 
-import com.app.commondomain.model.BreedModel
 import com.app.commondomain.repository.DogsRepository
+import com.app.commontest.BaseTest
+import com.app.commontest.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -12,14 +13,15 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class GetFavoriteBreedInteractorTest {
+class GetFavoriteBreedInteractorTest : BaseTest<GetFavoriteBreedInteractor>() {
+
+    override lateinit var classUnderTest: GetFavoriteBreedInteractor
 
     private val dogsRepository: DogsRepository = mockk()
-    private lateinit var getFavoriteBreedInteractor: GetFavoriteBreedInteractor
 
     @Before
-    fun setUp() {
-        getFavoriteBreedInteractor = GetFavoriteBreedInteractor(dogsRepository)
+    override fun setUp() {
+        classUnderTest = GetFavoriteBreedInteractor(dogsRepository)
     }
 
     /***
@@ -29,14 +31,14 @@ class GetFavoriteBreedInteractorTest {
      */
     @Test
     fun testRemoveFromFavorite() = runTest {
-        val flow = flow<List<BreedModel>> { }
-        //given
-        coEvery { dogsRepository.getFavoriteBreed() } returns flow
-
-        //when
-        getFavoriteBreedInteractor.get()
-
-        //then
-        coVerify { dogsRepository.getFavoriteBreed() }
+        test(
+            given = {
+                coEvery { dogsRepository.getFavoriteBreed() } returns flow { }
+            },
+            whenAction = { classUnderTest.invoke() },
+            then = {
+                coVerify { dogsRepository.getFavoriteBreed() }
+            }
+        )
     }
 }

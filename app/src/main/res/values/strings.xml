@@ -1,8 +1,3 @@
 <resources>
     <string name="app_name">PawPal</string>
-
-    <string name="tab_home_title">Breeds</string>
-    <string name="tab_watchlist_title">Favorites</string>
-    <string name="favorite_empty_title">No breed added as favorites</string>
-    <string name="search_hint">Search Breed..</string>
 </resources>

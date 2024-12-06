@@ -1,20 +1,22 @@
 package com.app.commondomain.interactors
 
 import com.app.commondomain.model.BreedModel
+import com.app.commontest.BaseTest
+import com.app.commontest.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class FetchComparisonDataInteractorTest {
+class FetchComparisonDataInteractorTest : BaseTest<FetchComparisonDataInteractor>() {
+
+    override lateinit var classUnderTest: FetchComparisonDataInteractor
 
     private val fetchBreedImagesInteractor: FetchBreedImagesInteractor = mockk()
-    private lateinit var fetchComparisonDataInteractor: FetchComparisonDataInteractor
 
     private var breedModel = BreedModel(
         breed = "affenpinscher", subBreed = "", isFavorite = false
@@ -22,8 +24,8 @@ class FetchComparisonDataInteractorTest {
 
 
     @Before
-    fun setUp() {
-        fetchComparisonDataInteractor = FetchComparisonDataInteractor(fetchBreedImagesInteractor)
+    override fun setUp() {
+        classUnderTest = FetchComparisonDataInteractor(fetchBreedImagesInteractor)
     }
 
     /***
@@ -34,22 +36,24 @@ class FetchComparisonDataInteractorTest {
     @Test
     fun testRemoveFromFavorite() = runTest {
         val params = FetchComparisonDataInteractor.Params(breedModel, breedModel)
-        //given
-        coEvery {
-            fetchBreedImagesInteractor.get(
-                FetchBreedImagesInteractor.Params(
-                    params.firstBreedData.breed,
-                    params.firstBreedData.subBreed,
-                )
-            )
-        } returns listOf("image")
-
-        //when
-        val result = fetchComparisonDataInteractor.get(params)
-        advanceUntilIdle()
-
-        //then
-        assertEquals(listOf("image"), result.firstBreedImages)
-        assertEquals(listOf("image"), result.secondBreedImages)
+        test(
+            given = {
+                coEvery {
+                    fetchBreedImagesInteractor.invoke(
+                        FetchBreedImagesInteractor.Params(
+                            params.firstBreedData.breed,
+                            params.firstBreedData.subBreed,
+                        )
+                    )
+                } returns listOf("image")
+            },
+            whenAction = {
+                classUnderTest.invoke(params)
+            },
+            then = {
+                assertEquals(listOf("image"), it.firstBreedImages)
+                assertEquals(listOf("image"), it.secondBreedImages)
+            }
+        )
     }
 }

@@ -2,6 +2,8 @@ package com.app.commondomain.interactors
 
 import com.app.commondomain.model.BreedModel
 import com.app.commondomain.repository.DogsRepository
+import com.app.commontest.BaseTest
+import com.app.commontest.test
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -11,14 +13,15 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class SaveToFavoriteInteractorTest {
+class SaveToFavoriteInteractorTest : BaseTest<SaveToFavoriteInteractor>() {
+
+    override lateinit var classUnderTest: SaveToFavoriteInteractor
 
     private val dogsRepository: DogsRepository = mockk()
-    private lateinit var saveToFavoriteInteractor: SaveToFavoriteInteractor
 
     @Before
-    fun setUp() {
-        saveToFavoriteInteractor = SaveToFavoriteInteractor(dogsRepository)
+    override fun setUp() {
+        classUnderTest = SaveToFavoriteInteractor(dogsRepository)
     }
 
     /***
@@ -29,13 +32,14 @@ class SaveToFavoriteInteractorTest {
     @Test
     fun testSaveToWatchlist() = runTest {
         val model: BreedModel = mockk()
-        //given
-        coJustRun { dogsRepository.saveToFavorite(model) }
-
-        //when
-        saveToFavoriteInteractor.save(model)
-
-        //then
-        coVerify { dogsRepository.saveToFavorite(model) }
+        test(
+            given = {
+                coJustRun { dogsRepository.saveToFavorite(model) }
+            },
+            whenAction = { classUnderTest.invoke(model) },
+            then = {
+                coVerify { dogsRepository.saveToFavorite(model) }
+            }
+        )
     }
 }

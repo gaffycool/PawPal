@@ -24,3 +24,5 @@ rootProject.name = "PawPal"
 include(":app")
 include(":commonData")
 include(":commonDomain")
+include(":presentation")
+include(":commonTest")

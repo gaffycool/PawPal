@@ -7,5 +7,5 @@ import javax.inject.Inject
 class FetchDogBreedsInteractor @Inject constructor(
     private val dogsRepository: DogsRepository
 ) {
-    suspend fun get(): List<BreedModel> = dogsRepository.fetchDogBreeds()
+    suspend operator fun invoke(): List<BreedModel> = dogsRepository.fetchDogBreeds().getOrThrow()
 }

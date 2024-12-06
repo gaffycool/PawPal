@@ -1,7 +1,8 @@
 package com.app.commondomain.interactors
 
-import com.app.commondomain.model.BreedModel
 import com.app.commondomain.repository.DogsRepository
+import com.app.commontest.BaseTest
+import com.app.commontest.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -11,14 +12,15 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class FetchDogBreedsInteractorTest {
+class FetchDogBreedsInteractorTest : BaseTest<FetchDogBreedsInteractor>() {
+
+    override lateinit var classUnderTest: FetchDogBreedsInteractor
 
     private val dogsRepository: DogsRepository = mockk()
-    private lateinit var fetchDogBreedsInteractor: FetchDogBreedsInteractor
 
     @Before
-    fun setUp() {
-        fetchDogBreedsInteractor = FetchDogBreedsInteractor(dogsRepository)
+    override fun setUp() {
+        classUnderTest = FetchDogBreedsInteractor(dogsRepository)
     }
 
     /***
@@ -28,14 +30,14 @@ class FetchDogBreedsInteractorTest {
      */
     @Test
     fun testFetchDogBreeds() = runTest {
-        val breedModels: List<BreedModel> = mockk()
-        //given
-        coEvery { dogsRepository.fetchDogBreeds() } returns breedModels
-
-        //when
-        fetchDogBreedsInteractor.get()
-
-        //then
-        coVerify { dogsRepository.fetchDogBreeds() }
+        test(
+            given = {
+                coEvery { dogsRepository.fetchDogBreeds() } returns Result.success(mockk())
+            },
+            whenAction = { classUnderTest.invoke() },
+            then = {
+                coVerify { dogsRepository.fetchDogBreeds() }
+            }
+        )
     }
 }

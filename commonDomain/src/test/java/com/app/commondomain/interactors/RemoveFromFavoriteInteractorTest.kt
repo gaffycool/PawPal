@@ -2,6 +2,8 @@ package com.app.commondomain.interactors
 
 import com.app.commondomain.model.BreedModel
 import com.app.commondomain.repository.DogsRepository
+import com.app.commontest.BaseTest
+import com.app.commontest.test
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -11,14 +13,15 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class RemoveFromFavoriteInteractorTest {
+class RemoveFromFavoriteInteractorTest : BaseTest<RemoveFromFavoriteInteractor>() {
+
+    override lateinit var classUnderTest: RemoveFromFavoriteInteractor
 
     private val dogsRepository: DogsRepository = mockk()
-    private lateinit var removeFromFavoriteInteractor: RemoveFromFavoriteInteractor
 
     @Before
-    fun setUp() {
-        removeFromFavoriteInteractor = RemoveFromFavoriteInteractor(dogsRepository)
+    override fun setUp() {
+        classUnderTest = RemoveFromFavoriteInteractor(dogsRepository)
     }
 
     /***
@@ -29,13 +32,14 @@ class RemoveFromFavoriteInteractorTest {
     @Test
     fun testRemoveFromWatchlist() = runTest {
         val model: BreedModel = mockk()
-        //given
-        coJustRun { dogsRepository.removeFromFavorite(model) }
-
-        //when
-        removeFromFavoriteInteractor.remove(model)
-
-        //then
-        coVerify { dogsRepository.removeFromFavorite(model) }
+        test(
+            given = {
+                coJustRun { dogsRepository.removeFromFavorite(model) }
+            },
+            whenAction = { classUnderTest.invoke(model) },
+            then = {
+                coVerify { dogsRepository.removeFromFavorite(model) }
+            }
+        )
     }
 }

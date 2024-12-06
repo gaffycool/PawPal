@@ -8,10 +8,10 @@ plugins {
 
 android {
     namespace = "com.app.commondata"
-    compileSdk = 34
+    compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 28
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -41,8 +41,6 @@ dependencies {
     implementation(libs.material)
     implementation(project(":commonDomain"))
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.android)
@@ -71,4 +69,5 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.jupiter)
+    testImplementation(project(":commonTest"))
 }
